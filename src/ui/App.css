@@ -13,6 +13,7 @@
   flex-direction: column;
   border-right: 1px solid var(--border);
   z-index: 10;
+  background: var(--bg-sidebar);
 }
 
 .sidebar-header {
@@ -45,14 +46,14 @@
 }
 
 .history-item {
-  padding: 6px 10px;
-  border-radius: 0;
+  padding: 8px 12px;
+  border-radius: var(--radius);
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 10px;
   transition: all 0.1s ease;
-  margin-bottom: 0;
+  margin-bottom: 2px;
 }
 
 .history-item:hover {
@@ -62,8 +63,8 @@
 .method-badge {
   font-size: 0.65rem;
   font-weight: 700;
-  padding: 1px 4px;
-  border-radius: 2px;
+  padding: 2px 6px;
+  border-radius: var(--radius);
   min-width: 40px;
   text-align: center;
 }
@@ -110,6 +111,7 @@
   padding: 10px;
   background: var(--bg-sidebar);
   border: 1px solid var(--border);
+  border-radius: var(--radius);
   display: flex;
   gap: 12px;
   align-items: center;
@@ -120,7 +122,7 @@
   border: 1px solid var(--border);
   color: white;
   padding: 7px 12px;
-  border-radius: 2px;
+  border-radius: var(--radius);
   outline: none;
   font-weight: 600;
 }
@@ -134,6 +136,11 @@
 .btn-accent {
   background: var(--primary);
   color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="ghostwire"] .btn-accent {
+  box-shadow: var(--glow);
 }
 
 .btn-accent:hover {
@@ -152,21 +159,23 @@
 }
 
 .tab {
-  background: #2d2d2d;
+  background: var(--bg-sidebar);
   border: none;
   padding: 8px 25px;
   color: var(--text-dim);
-  border-radius: 0;
+  border-radius: var(--radius) var(--radius) 0 0;
   cursor: pointer;
   font-size: 0.85rem;
   font-weight: 500;
-  margin-right: 1px;
+  margin-right: 2px;
 }
 
 .tab.active {
   background: var(--bg-main);
   color: white;
   position: relative;
+  border: 1px solid var(--border);
+  border-bottom: none;
 }
 
 .tab.active::after {
@@ -175,13 +184,18 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
+  height: 2px;
   background: var(--primary);
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .tab-content {
-  padding: 20px 0;
+  padding: 20px;
   min-height: 150px;
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: 0 var(--radius) var(--radius) var(--radius);
+  margin-top: -1px;
 }
 
 .headers-editor .row {
@@ -241,7 +255,7 @@
 
 .badge {
   padding: 2px 8px;
-  border-radius: 2px;
+  border-radius: var(--radius);
   font-size: 0.7rem;
   font-weight: 500;
   background: var(--bg-input);
@@ -262,6 +276,7 @@
   overflow: auto;
   background: var(--bg-main);
   border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 15px;
   font-family: 'JetBrains Mono', 'Consolas', monospace;
   font-size: 0.9rem;

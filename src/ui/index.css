@@ -4,14 +4,13 @@
   font-weight: 400;
 
   color-scheme: dark;
-  color: #cccccc;
-  background-color: #1e1e1e;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
+[data-theme="vscode"] {
   --bg-main: #1e1e1e;
   --bg-sidebar: #252526;
   --bg-input: #3c3c3c;
@@ -22,15 +21,32 @@
   --border: #3c3c3c;
   --text-main: #cccccc;
   --text-dim: #858585;
+  --radius: 0px;
+}
+
+[data-theme="ghostwire"] {
+  --bg-main: #0b0e14;
+  --bg-sidebar: #161b22;
+  --bg-input: #1c2128;
+  --primary: #1f6feb;
+  --primary-hover: #388bfd;
+  --accent: #58a6ff;
+  --danger: #f14c4c;
+  --border: #30363d;
+  --text-main: #c9d1d9;
+  --text-dim: #8b949e;
+  --radius: 12px;
+  --glow: 0 0 15px rgba(31, 111, 235, 0.4);
 }
 
 body {
   margin: 0;
+  color: var(--text-main);
+  background-color: var(--bg-main);
   display: flex;
   min-width: 320px;
   min-height: 100vh;
   overflow: hidden;
-  background-color: var(--bg-main);
 }
 
 #root {
@@ -42,11 +58,12 @@ body {
 .glass {
   background: var(--bg-sidebar);
   border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 .btn {
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: var(--radius);
   border: none;
   cursor: pointer;
   font-weight: 500;
@@ -80,7 +97,7 @@ body {
 .input {
   background: var(--bg-input);
   border: 1px solid var(--border);
-  border-radius: 2px;
+  border-radius: var(--radius);
   padding: 8px 12px;
   color: white;
   outline: none;

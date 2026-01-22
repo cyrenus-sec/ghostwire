@@ -55,13 +55,15 @@ function App() {
   const [collections, setCollections] = useState<Collection[]>([]);
   const [collapsedCollections, setCollapsedCollections] = useState<Set<number>>(new Set());
   const [isLoaded, setIsLoaded] = useState(false);
+  const [theme, setTheme] = useState<'vscode' | 'ghostwire'>(() => {
+    return (localStorage.getItem('ghostwire-theme') as 'vscode' | 'ghostwire') || 'vscode';
+  });
 
   // Load data
   useEffect(() => {
-    const savedHistory = localStorage.getItem('http_cli_history');
+    const savedHistory = localStorage.getItem('ghostwire-history');
+    const savedCollections = localStorage.getItem('ghostwire-collections');
     if (savedHistory) setHistory(JSON.parse(savedHistory));
-
-    const savedCollections = localStorage.getItem('http_cli_collections_v3');
     if (savedCollections) setCollections(JSON.parse(savedCollections));
 
     setIsLoaded(true);
@@ -82,15 +84,19 @@ function App() {
   // Sync to localStorage
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem('http_cli_history', JSON.stringify(history.slice(0, 50)));
+      localStorage.setItem('ghostwire-history', JSON.stringify(history));
     }
   }, [history, isLoaded]);
 
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem('http_cli_collections_v3', JSON.stringify(collections));
+      localStorage.setItem('ghostwire-collections', JSON.stringify(collections));
     }
   }, [collections, isLoaded]);
+
+  useEffect(() => {
+    localStorage.setItem('ghostwire-theme', theme);
+  }, [theme]);
 
   const parseVerboseOutput = (output: string): Partial<ResponseState> => {
     const lines = output.split('\n');
@@ -398,12 +404,17 @@ function App() {
     setRequest(prev => ({ ...prev, headers: newHeaders }));
   };
 
+  const toggleTheme = () => setTheme(prev => prev === 'vscode' ? 'ghostwire' : 'vscode');
+
   return (
-    <div className="app-container">
+    <div className="app-container" data-theme={theme}>
       <aside className="sidebar glass">
         <div className="sidebar-header">
           <h2>GHOSTWIRE</h2>
           <div className="sidebar-actions">
+            <button className="btn btn-ghost btn-xs" onClick={toggleTheme} title="Switch Theme">
+              {theme === 'vscode' ? '🎨' : '👻'}
+            </button>
             <button className="btn btn-ghost btn-xs" onClick={handleExport} title="Export">📤</button>
             <button className="btn btn-ghost btn-xs" onClick={handleImport} title="Import">📥</button>
             <button className="btn btn-ghost btn-xs" onClick={handleCreateCollection} title="New Collection">➕</button>

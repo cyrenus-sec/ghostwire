@@ -1,7 +1,7 @@
 # 👻 GhostWire
 
 **GhostWire** is a premium, security-focused HTTP client built with Electron, React, and Go. It combines the ease of use of a modern API client with professional-grade security scanning capabilities, all wrapped in a sleek VS Code-inspired interface.
-
+![GhostWire screen](screens/main.png)
 ![GhostWire Interface](screens/screen.png)
 
 ## ✨ Features
