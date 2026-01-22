@@ -4,7 +4,8 @@
     "icon": "./appicon.png",
     "files": [
         "dist-electron/**/*",
-        "dist-react/**/*"
+        "dist-react/**/*",
+        "appicon.png"
     ],
     "mac": {
         "target": "dmg"

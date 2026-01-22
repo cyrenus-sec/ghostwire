@@ -119,6 +119,7 @@ app.on('ready', () => {
         height: 800,
         title: 'Ghostwire',
         backgroundColor: '#1e1e1e',
+        icon: path.join(app.getAppPath(), 'appicon.png'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
