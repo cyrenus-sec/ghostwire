@@ -1,6 +1,7 @@
 # 👻 GhostWire
 
 **GhostWire** is a premium, security-focused HTTP client built with Electron, React, and Go. It combines the ease of use of a modern API client with professional-grade security scanning capabilities, all wrapped in a sleek VS Code-inspired interface.
+
 ![GhostWire screen](screens/main.png)
 ![GhostWire Interface](screens/screen.png)
 
@@ -13,96 +14,100 @@
 - **Global CLI Integration**: Powered by a high-performance Go-based backend (`httpcli`).
 - **Dual Metadata View**: Inspect both Request and Response headers side-by-side.
 
-## 🚀 How to Use
+## 🚀 Quick Start (For End Users)
 
-### 1. Prerequisites
-
-GhostWire requires the **httpcli** security tool to be installed globally on your system.
-
-#### For End Users
+### 1. Install httpcli
 Download and install the pre-built `httpcli` binary from the [http-cli releases](https://github.com/cyrenus-sec/http-cli/releases).
 
-#### For Developers Building from Source
+### 2. Download GhostWire
+Download the latest [GhostWire Release](https://github.com/cyrenus-sec/ghostwire/releases) and launch the AppImage or executable.
 
-> [!IMPORTANT]
-> If you already cloned the repository without the `--recurse-submodules` flag, you'll need to initialize the submodule manually.
+### 3. Start Using
+Inside the app:
+- **Send Requests**: Enter your URL, method, and headers/body.
+- **Run Scans**: Toggle the **Security Scan** option to identify vulnerabilities.
+- **Manage Collections**: Use the sidebar to group requests and export/import them as JSON.
 
-The `http-cli` repository is included as a git submodule. Initialize and build it:
+---
+
+## 🛠️ Developer Guide (Building from Source)
+
+### Prerequisites
+
+Before building GhostWire, ensure you have:
+- [Node.js](https://nodejs.org/) (v18+)
+- [Go](https://golang.org/) (v1.19+)
+- [npm](https://www.npmjs.com/)
+
+### Setup Instructions
+
+#### 1. Clone the Repository
+
+Clone with submodules to automatically include the `http-cli` dependency:
 
 ```bash
-# Initialize and update the http-cli submodule
-git submodule update --init
+git clone --recurse-submodules git@github.com:cyrenus-sec/ghostwire.git
+cd ghostwire
+```
 
-# Build the CLI
+> [!IMPORTANT]
+> If you already cloned without `--recurse-submodules`, initialize the submodule manually:
+> ```bash
+> git submodule update --init
+> ```
+
+#### 2. Build the httpcli Backend
+
+The `http-cli` repository is included as a git submodule. Build it:
+
+```bash
 cd http-cli
 go build -o httpcli main.go
 sudo mv httpcli /usr/local/bin/
 cd ..
 ```
 
-### 2. Running the App
-Download the latest [Release](https://github.com/cyrenus-sec/ghostwire/releases) and launch the AppImage or executable.
+#### 3. Install Node Dependencies
 
-Inside the app:
-- **Send Requests**: Enter your URL, method, and headers/body.
-- **Run Scans**: Toggle the **Security Scan** option to identify vulnerabilities.
-- **Manage Collections**: Use the sidebar to group requests and export/import them as JSON.
+```bash
+npm install
+```
 
-## 🛠️ Building from Source
+#### 4. Development Mode
 
-If you want to build GhostWire yourself, follow these steps:
+Run the app in development with Hot Module Replacement (HMR):
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v18+)
-- [Go](https://golang.org/) (if building the CLI from source)
-- [npm](https://www.npmjs.com/)
+```bash
+# Terminal 1: Start React dev server
+npm run dev:react
 
-### Steps
+# Terminal 2: Start Electron
+npm run dev:electron
+```
 
-1. **Clone the repository:**
-   ```bash
-   git clone --recurse-submodules git@github.com:cyrenus-sec/ghostwire.git
-   cd ghostwire
-   ```
-   
-   If you already cloned without `--recurse-submodules`, run:
-   ```bash
-   git submodule update --init
-   ```
+#### 5. Build Production Assets
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+```bash
+npm run build
+```
 
-3. **Development Mode:**
-   To run the app in development with Hot Module Replacement (HMR):
-   ```bash
-   # Window 1: React dev server
-   npm run dev:react
-   
-   # Window 2: Electron runner
-   npm run dev:electron
-   ```
+#### 6. Generate Packaged Binaries
 
-4. **Build Production Assets:**
-   ```bash
-   npm run build
-   ```
+```bash
+# For Linux (AppImage)
+npm run dist:linux
 
-5. **Generate Packaged Binaries:**
-   ```bash
-   # For Linux (AppImage)
-   npm run dist:linux
-   
-   # For Windows (.exe)
-   npm run dist:win
-   
-   # For macOS (.dmg)
-   npm run dist:mac
-   ```
+# For Windows (.exe)
+npm run dist:win
+
+# For macOS (.dmg)
+npm run dist:mac
+```
 
 The packaged output will be available in the `/dist` directory.
 
+---
+
 ## 📜 License
+
 GhostWire is licensed under the MIT License. Developed for security enthusiasts and professionals.
