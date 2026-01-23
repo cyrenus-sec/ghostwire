@@ -1,0 +1,3 @@
+[submodule "http-cli"]
+	path = http-cli
+	url = https://github.com/cyrenus-sec/http-cli.git
