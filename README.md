@@ -18,15 +18,20 @@
 ### 1. Prerequisites
 GhostWire requires the **httpcli** security tool to be installed globally on your system.
 
-**Install httpcli from source:**
-```bash
-# Clone the security-cli repository
-git clone https://github.com/cyrenus-sec/http-cli.git
-cd http-cli
+**For end users:**
+Download and install `httpcli` from the [http-cli releases](https://github.com/cyrenus-sec/http-cli/releases).
 
-# Build and install to your PATH ( linux ) see http-cli main repo for other systems 
+**For developers building from source:**
+The `http-cli` repository is included as a git submodule. After cloning GhostWire, initialize the submodule:
+```bash
+# Initialize and update the http-cli submodule
+git submodule update --init
+
+# Build the CLI
+cd http-cli
 go build -o httpcli main.go
 sudo mv httpcli /usr/local/bin/
+cd ..
 ```
 
 ### 2. Running the App
@@ -50,8 +55,13 @@ If you want to build GhostWire yourself, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone git@github.com:cyrenus-sec/ghostwire.git
+   git clone --recurse-submodules git@github.com:cyrenus-sec/ghostwire.git
    cd ghostwire
+   ```
+   
+   If you already cloned without `--recurse-submodules`, run:
+   ```bash
+   git submodule update --init
    ```
 
 2. **Install dependencies:**
