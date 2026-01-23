@@ -166,6 +166,8 @@ function App() {
 
     if (isScan) {
       args.push('-scan', '-scan-type', request.scanType);
+      //compliance pci, hipaa, gdpr
+      args.push('-compliance', 'pci,hipaa,gdpr');
     }
 
     try {
