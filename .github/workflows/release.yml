@@ -209,7 +209,51 @@ jobs:
           body_path: release_notes.md
           files: |
             release/*
-          draft: false
+          draft: true
           prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+          fail_on_unmatched_files: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish release
+        uses: actions/github-script@v6
+        if: always() # ensure publish runs after upload step
+        with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            script: |
+                const tag = process.env.VERSION;
+
+                if (!tag) {
+                    throw new Error(
+                    'VERSION env not set; make sure the Extract version step has id: version'
+                    );
+                }
+
+                try {
+                    const { data: release } = await github.rest.repos.getReleaseByTag({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    tag,
+                    });
+
+                    if (!release.draft) {
+                    console.log(
+                        `Release for tag ${tag} is already published (release id ${release.id}).`
+                    );
+                    } else {
+                    await github.rest.repos.updateRelease({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        release_id: release.id,
+                        draft: false,
+                    });
+
+                    console.log(
+                        `Published release ${release.id} for tag ${tag}.`
+                    );
+                    }
+                } catch (err) {
+                    throw err;
+                }
+        env:
+            VERSION: ${{ steps.version.outputs.version }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
