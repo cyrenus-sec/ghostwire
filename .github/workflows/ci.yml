@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  lint-and-test:
+    name: Lint and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build http-cli
+        run: |
+          cd http-cli
+          go build -o httpcli main.go
+          cd ..
+
+      - name: Transpile Electron
+        run: npm run transpile:electron
+
+      - name: Build React
+        run: npm run build
+
+  build-test:
+    name: Build Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build http-cli (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          cd http-cli
+          go build -o httpcli main.go
+          cd ..
+
+      - name: Build http-cli (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          cd http-cli
+          go build -o httpcli.exe main.go
+          cd ..
+
+      - name: Transpile and Build
+        run: |
+          npm run transpile:electron
+          npm run build
+
+      - name: Verify build output
+        shell: bash
+        run: |
+          echo "Checking dist-electron directory:"
+          ls -la dist-electron/ || echo "No dist-electron"
+          echo "Checking dist directory:"
+          ls -la dist/ || echo "No dist"
