@@ -3,6 +3,10 @@
   "productName": "Ghostwire",
   "private": true,
   "version": "0.0.0",
+  "author": {
+    "name": "Cyrenus Security : Mohamed Alaaeldin Elkerwash @ Cyrenus",
+    "email": "m.elqrwash@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:cyrenus-sec/ghostwire.git"
