@@ -77,11 +77,14 @@ jobs:
       - name: Build Electron app (Linux)
         if: matrix.platform == 'linux'
         run: npm run dist:linux
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Electron app (macOS)
         if: matrix.platform == 'mac'
         run: npm run dist:mac
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Code signing (optional - see below for setup)
           CSC_LINK: ${{ secrets.MAC_CERTIFICATE }}
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
@@ -92,6 +95,7 @@ jobs:
         if: matrix.platform == 'win'
         run: npm run dist:win
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Code signing (optional)
           CSC_LINK: ${{ secrets.WIN_CERTIFICATE }}
           CSC_KEY_PASSWORD: ${{ secrets.WIN_CERTIFICATE_PASSWORD }}

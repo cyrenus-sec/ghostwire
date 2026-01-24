@@ -2,6 +2,7 @@
     "appId": "com.cyrenus.ghostwire",
     "productName": "Ghostwire",
     "icon": "./appicon.png",
+    "publish": null,
     "files": [
         "dist-electron/**/*",
         "dist-react/**/*",
