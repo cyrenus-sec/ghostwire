@@ -214,7 +214,7 @@ jobs:
           fail_on_unmatched_files: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish release
+   
         uses: actions/github-script@v6
         if: always() # ensure publish runs after upload step
         with:
