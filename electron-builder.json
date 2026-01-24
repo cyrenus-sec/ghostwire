@@ -9,16 +9,25 @@
         "appicon.png"
     ],
     "mac": {
-        "target": "dmg"
+        "target": [
+            "dmg",
+            "zip"
+        ],
+        "category": "public.app-category.developer-tools"
     },
     "linux": {
-        "target": "AppImage",
-        "category": "Utility"
+        "target": [
+            "AppImage",
+            "deb",
+            "rpm"
+        ],
+        "category": "Utility",
+        "maintainer": "Cyrenus Security : mohamed Alaaeldin <m.elqrwash@gmail.com>"
     },
     "win": {
         "target": [
             "portable",
-            "msi"
+            "nsis"
         ]
     }
 }
